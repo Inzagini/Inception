@@ -1,13 +1,13 @@
 all: build
 
 build:
-	docker-compose -f docker-compose.yaml build
+	docker-compose -f docker-compose.yml build
 
 up:
-	docker-compose -f docker-compose.yaml up -d
+	docker-compose -f docker-compose.yml up -d
 
 down:
-	docker-compose -f docker-compose.yaml down
+	docker-compose -f docker-compose.yml down
 
 # clean: down
 # 	docker volume rm wordpress_db wordpress_website

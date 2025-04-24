@@ -10,7 +10,7 @@ services:
     build:
       dockerfile: ./php/Dockerfile
     volumes:
-      - ./app:/app
+      - ./app:/var/www/html
 
   db:
     image: mariadb:11.8.1-rc
