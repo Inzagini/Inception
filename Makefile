@@ -13,7 +13,7 @@ down:
 # 	docker volume rm wordpress_db wordpress_website
 
 prune_a:
-	docke system prune -a
+	docker system prune -a
 
 re: down build up
 
