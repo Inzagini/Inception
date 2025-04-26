@@ -17,13 +17,16 @@ services:
 
   db:
     image: mariadb:11.8.1-rc
+    # build:
+    #   context: .
+    #   dockerfile: ./mariadb/Dockerfile
     volumes:
-      - mariadbdata:/var/lib/mariadb
+      - mariadbdata:/var/lib/mysql
     ports:
       - "3306:3306"
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: docker-php
+      MYSQL_DATABASE: secret
       MYSQL_USER: user
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_PASSWORD: secret
