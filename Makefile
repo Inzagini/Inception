@@ -1,8 +1,11 @@
 all: build
 
 build:
+ifeq ($(ser),)
 	docker compose -f docker-compose.yml build
-
+else
+	docker compose build $(ser)
+endif
 up:
 	docker compose -f docker-compose.yml up -d
 

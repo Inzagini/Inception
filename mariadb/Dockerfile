@@ -17,6 +17,7 @@ RUN chown -R mysql:mysql /etc/my.cnf
 COPY ./mariadb/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+COPY ./mariadb/init.sql /docker-entrypoint-initdb.d/
 
 EXPOSE 3306
 
