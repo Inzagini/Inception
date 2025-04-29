@@ -4,7 +4,10 @@ set -e
 MYSQL_DATA_DIR="/var/lib/mysql"
 
 # Make sure permissions are correct
-chown -R mysql:mysql "$MYSQL_DATA_DIR"
+mkdir -p /run/mysqld /var/log/mysql /var/lib/mysql
+chown -R mysql:mysql /run/mysqld /var/log/mysql /var/lib/mysql
+
+sed -i "s/port = 3306/port = 3306/g" /etc/my.cnf.d/mariadb-server.cnf
 
 # Initialize database if empty
 if [ ! -d "$MYSQL_DATA_DIR/mysql" ]; then
@@ -23,4 +26,5 @@ EOSQL
 fi
 
 echo "Starting MariaDB server..."
+
 exec mariadbd --user=mysql --console
