@@ -9,8 +9,8 @@ up:
 down:
 	docker compose -f docker-compose.yml down
 
-# clean: down
-# 	docker volume rm wordpress_db wordpress_website
+clean: down
+	docker volume rm inception_mariadbdata
 
 prune_a:
 	docker system prune -a

@@ -13,7 +13,10 @@ services:
       - "80:80"
     volumes:
       - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./app/public/wp-config.php:/var/www/html/wp-config.php
       - ./app:/var/www/html
+    env_file:
+      - .env
 
   db:
     image: mariadb:11.8.1-rc
@@ -23,11 +26,12 @@ services:
       - "3306:3306"
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: docker-php
-      MYSQL_USER: user
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_PASSWORD: secret
-
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    env_file:
+      - .env
 volumes:
   mariadbdata:
   #mariadb:

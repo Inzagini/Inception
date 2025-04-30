@@ -20,7 +20,7 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'docker-php' );
+define( 'DB_NAME', 'wordpressDB' );
 
 /** Database username */
 define( 'DB_USER', 'user' );
