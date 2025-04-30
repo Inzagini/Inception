@@ -21,15 +21,24 @@ echo "MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD"
 if [ ! -d "$MYSQL_DATA_DIR/mysql" ]; then
     echo "Initializing MariaDB data directory..."
     mariadbd --initialize-insecure --user=mysql --datadir="$MYSQL_DATA_DIR"
+    echo "bootstraping"
+    mariadb --user=mysql --bootstrap < /docker-entrypoint-initdb.d/init.sql
 fi
 
-if [ ! -f /var/lib/mysql/.db_initialized ]; then
-    echo "Running init.sql to set up the database..."
-    echo "work directory $(pwd)"
-    mariadb -e "$(eval "echo \"$(cat /docker-entrypoint-initdb.d/init.sql)\"")" --ssl=0
-    echo "Database creation status: $?"
-    touch /var/lib/mysql/.db_initialized
-fi
+# if [ ! -f /var/lib/mysql/.db_initialized ]; then
+#     echo "Running init.sql to set up the database..."
+#     mariadbd &
+
+#     if ! mysqladmin --wait=30 ping; then
+# 	printf "Could not ping mariadb for 30 seconds, runtime configuration is not possible.\n"
+# 	exit 1
+#     fi
+#     echo "work directory $(pwd)"
+#     mariadb -e "$(eval "echo \"$(cat /docker-entrypoint-initdb.d/init.sql)\"")" --ssl=0
+#     echo "Database creation status: $?"
+#     touch /var/lib/mysql/.db_initialized
+#     pkill mariadbd
+# fi
 
 echo "Starting MariaDB server..."
 

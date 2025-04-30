@@ -21,4 +21,6 @@ COPY ./mariadb/init.sql /docker-entrypoint-initdb.d/
 
 EXPOSE 3306
 
-CMD ["sh", "./entrypoint.sh"]
+WORKDIR /docker-entrypoint-initdb.d
+
+ENTRYPOINT ["sh", "../entrypoint.sh"]
