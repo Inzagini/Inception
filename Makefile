@@ -22,6 +22,8 @@ re: down build up
 
 re-all: clean prune_a build up
 
+rebuild: clean build up
+	sleep 5 && docker ps | grep inception-db-1 > /dev/null || docker compose logs db
 logs:
 	docker compose logs app
 	docker compose logs web

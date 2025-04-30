@@ -1,14 +1,5 @@
--- Create database if not exists
-CREATE DATABASE IF NOT EXISTS `docker-php`;
-
--- Create user with privileges
-CREATE USER IF NOT EXISTS 'user'@'%' IDENTIFIED BY 'secret';
-
--- Grant privileges
-GRANT ALL PRIVILEGES ON `docker-php`.* TO 'user'@'%';
-
--- Set root password
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'secret';
-
--- Flush privileges to apply the changes
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+CREATE USER ${MYSQL_USER}@'%' IDENTIFIED by '${MYSQL_PASSWORD}';
+CREATE DATABASE $MYSQL_DATABASE;
+GRANT ALL PRIVILEGES ON "${MYSQL_DATABASE}.*" TO "${MYSQL_USER}"@'%';
 FLUSH PRIVILEGES;

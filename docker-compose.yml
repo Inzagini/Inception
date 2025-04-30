@@ -28,10 +28,10 @@ services:
       - "3306:3306"
     restart: no
     environment:
-      MYSQL_DATABASE: docker-php
-      MYSQL_USER: user
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     env_file:
      - .env
 

@@ -8,9 +8,9 @@ mkdir -p /run/mysqld /var/log/mysql /var/lib/mysql
 chown -R mysql:mysql /run/mysqld /var/log/mysql /var/lib/mysql
 
 sed -i "s/port = 3306/port = 3306/g" /etc/my.cnf.d/mariadb-server.cnf
-
 echo "bind-address = 0.0.0.0" >> /etc/my.cnf.d/mariadb-server.cnf
 echo "skip-networking" >> /etc/my.cnf.d/mariadb-server.cnf
+
 #debug
 echo "MYSQL_USER: $MYSQL_USER"
 echo "MYSQL_PASSWORD: $MYSQL_PASSWORD"
@@ -23,6 +23,13 @@ if [ ! -d "$MYSQL_DATA_DIR/mysql" ]; then
     mariadbd --initialize-insecure --user=mysql --datadir="$MYSQL_DATA_DIR"
 fi
 
+if [ ! -f /var/lib/mysql/.db_initialized ]; then
+    echo "Running init.sql to set up the database..."
+    echo "work directory $(pwd)"
+    mariadb -e "$(eval "echo \"$(cat /docker-entrypoint-initdb.d/init.sql)\"")" --ssl=0
+    echo "Database creation status: $?"
+    touch /var/lib/mysql/.db_initialized
+fi
 
 echo "Starting MariaDB server..."
 
