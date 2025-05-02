@@ -1,38 +1,36 @@
-FROM alpine:3.21
+FROM php:8.2.28-fpm
 
-RUN apk update && apk add --no-cache \
-	php84 \
-	php84-fpm \
-	php84-mysqli \
-	php84-pdo \
-	php84-pdo_mysql \
-	php84-json \
-	php84-mbstring \
-	php84-xml \
-	php84-session \
-	php84-curl \
-	php84-gd \
-	php84-zip \
-	php84-openssl \
-	php84-tokenizer \
-	php84-common \
-	php84-cli \
-	tzdata \
-	curl \
-	shadow && \
-	ln -s /usr/bin/php84 /usr/bin/php && \
-	ln -s /usr/sbin/php-fpm84 /usr/sbin/php-fpm \
-	&& rm -rf /var/cache/apk/*
+RUN docker-php-ext-install pdo pdo_mysql
 
-COPY ./php/www.conf /etc/php84/php-fpm.d/www.conf
+# FROM debian:trixie
 
-WORKDIR /var/www/html
+# RUN apt-get update && apt-get install -y \
+# 	wget \
+# 	curl \
+# 	bash \
+# 	php8.4 \
+# 	php8.4-cgi \
+# 	php8.4-mysql \
+# 	php8.4-fpm \
+# 	php8.4-pdo \
+# 	php8.4-gd php-cli \
+# 	php8.4-mbstring \
+# 	redis \
+# 	php-redis \
+# 	&& rm -rf /var/lib/apt/lists/*\
 
-RUN adduser -D -g 'www' www && \
-    chown -R www:www /var/www/html && \
-    chmod -R 755 /var/www/html
+# COPY ./php/www.conf /etc/php/8.4/fpm/pool.d
 
+# RUN mkdir -p /run/php /var/www/html
 
-EXPOSE 9000
+# RUN mkdir -p /var/log/php && chown www-data:www-data /var/log/php
 
-CMD ["php-fpm84", "-F"]
+# RUN useradd -m -s /bin/bash -g www-data www && \
+#     chown -R www:www-data /var/www/html && \
+#     chmod -R 755 /var/www/html
+
+# WORKDIR /var/www/html
+
+# EXPOSE 9000
+
+# CMD ["/usr/sbin/php-fpm8.4", "-F"]

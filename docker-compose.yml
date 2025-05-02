@@ -1,24 +1,26 @@
 services:
 
+  web:
+    image: nginx:latest
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./certs:/etc/nginx/certs:ro
+      - ./app:/app
+    env_file:
+      - .env
+    # networks:
+    #   - network
+
   app:
     build:
       dockerfile: ./php/Dockerfile
     volumes:
-      - ./app:/var/www/html
-    networks:
-      - network
-
-  web:
-    build:
-      dockerfile: ./nginx/Dockerfile
-    ports:
-      - "80:80"
-    volumes:
-      - ./app:/var/www/html
+      - ./app:/app
     env_file:
-      - .env
-    networks:
-      - network
+     - .env
+    #   - network
 
   # db:
   #   image: mariadb:11.8.1-rc
@@ -38,6 +40,6 @@ volumes:
   mariadbdata:
   #mariadb:
 
-networks:
-  network:
-    driver: bridge
+# networks:
+#   network:
+#     driver: bridge
