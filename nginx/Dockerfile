@@ -1,9 +1,8 @@
-FROM alpine:3.21
+FROM debian:trixie
 
-RUN apk update && apk add --no-cache nginx
+RUN apt-get update && apt-get install nginx openssl -y
 
 COPY ./nginx/conf.d/default.conf ./etc/nginx/conf.d/default.conf
-COPY ./nginx/nginx.conf ./etc/nginx/nginx.conf
 
 RUN mkdir -p /var/log/nginx
 
