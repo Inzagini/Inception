@@ -7,7 +7,7 @@ services:
     volumes:
       - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/certs:/etc/nginx/certs:ro
-      - ./app:/app
+      - ./app/public:/var/www/html
     env_file:
       - .env
     # networks:
@@ -17,7 +17,7 @@ services:
     build:
       dockerfile: ./php/Dockerfile
     volumes:
-      - ./app:/app
+      - ./app/public:/var/www/html
     env_file:
      - .env
     #   - network
