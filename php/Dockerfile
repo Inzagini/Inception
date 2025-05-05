@@ -1,6 +1,6 @@
 FROM php:8.2.28-fpm
 
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql mysqli
 
 # FROM debian:trixie
 

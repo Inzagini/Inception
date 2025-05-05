@@ -10,8 +10,6 @@ services:
       - ./app/public:/var/www/html
     env_file:
       - .env
-    # networks:
-    #   - network
 
   app:
     build:
@@ -20,25 +18,24 @@ services:
       - ./app/public:/var/www/html
     env_file:
      - .env
-    #   - network
 
-  # db:
-  #   image: mariadb:11.8.1-rc
-  #   volumes:
-  #     - mariadbdata:/var/lib/mariadb
-  #   ports:
-  #     - "3306:3306"
-  #   restart: unless-stopped
-  #   environment:
-  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
-  #     MYSQL_USER: ${MYSQL_USER}
-  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-  #   env_file:
-  #     - .env
+  db:
+    image: mariadb:11.8.1-rc
+    volumes:
+      - mariadbdata:/var/lib/mariadb
+    ports:
+      - "3306:3306"
+    restart: no
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    env_file:
+      - .env
+
 volumes:
   mariadbdata:
-  #mariadb:
 
 # networks:
 #   network:
