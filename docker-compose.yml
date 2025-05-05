@@ -10,6 +10,8 @@ services:
       - ./app/public:/var/www/html
     env_file:
       - .env
+    networks:
+      - network
 
   app:
     build:
@@ -18,11 +20,13 @@ services:
       - ./app/public:/var/www/html
     env_file:
      - .env
+    networks:
+      - network
 
   db:
     image: mariadb:11.8.1-rc
     volumes:
-      - mariadbdata:/var/lib/mariadb
+      - mariadbdata:/var/lib/mysql
     ports:
       - "3306:3306"
     restart: no
@@ -33,10 +37,12 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     env_file:
       - .env
+    networks:
+      - network
 
 volumes:
   mariadbdata:
 
-# networks:
-#   network:
-#     driver: bridge
+networks:
+  network:
+    driver: bridge
