@@ -1,48 +1,6 @@
 services:
-
-  web:
-    image: nginx:latest
+  nginx:
+    image: ./requirements/nginx/DockerFile
     ports:
-      - "443:443"
-    volumes:
-      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
-      - ./nginx/certs:/etc/nginx/certs:ro
-      - ./app/public:/var/www/html
-    env_file:
-      - .env
-    networks:
-      - network
+      - "80:80"
 
-  app:
-    build:
-      dockerfile: ./php/Dockerfile
-    volumes:
-      - ./app/public:/var/www/html
-    env_file:
-     - .env
-    networks:
-      - network
-
-  db:
-    image: mariadb:11.8.1-rc
-    volumes:
-      - mariadbdata:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    restart: no
-    environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    env_file:
-      - .env
-    networks:
-      - network
-
-volumes:
-  mariadbdata:
-
-networks:
-  network:
-    driver: bridge
