@@ -6,15 +6,29 @@ services:
       - "80:80"
     volumes:
       - ./web:/var/www/html
+    depends_on:
+      - mariadb
+      - wordpress
+    networks:
+      inception:
 
   wordpress:
     build: requirements/wordpress/.
     container_name: wp-php
     volumes:
       - ./web:/var/www/html
+    depends_on:
+      - mariadb
+    networks:
+      inception:
 
   mariadb:
     build: requirements/mariadb/.
     container_name: mariadb
+    networks:
+      inception:
+
+networks:
+  inception:
 
 
