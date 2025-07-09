@@ -25,6 +25,8 @@ services:
   mariadb:
     build: requirements/mariadb/.
     container_name: mariadb
+    volumes:
+      - ./database:/var/lib/mysql
     networks:
       inception:
 
