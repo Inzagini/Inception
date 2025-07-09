@@ -6,8 +6,6 @@ services:
       - "80:80"
     volumes:
       - ./web:/var/www/html
-    depends_on:
-      - wordpress
 
   wordpress:
     build: requirements/wordpress/.
@@ -18,3 +16,5 @@ services:
   mariadb:
     build: requirements/mariadb/.
     container_name: mariadb
+
+
