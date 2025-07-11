@@ -1,6 +1,9 @@
+CERT:= ./requirements/nginx/ssl/server.cert ./requirements/nginx/ssl/server.key
+KEY_GEN_PATH:= ./requirements/nginx/keygen.sh
+
 all: build
 
-build:
+build: $(CERT)
 ifeq ($(ser),)
 	docker compose -f docker-compose.yml build
 else
@@ -27,5 +30,10 @@ rebuild: clean build up
 logs:
 	docker compose logs nginx
 	docker compose logs wordpress
+
+$(CERT):
+	@echo "🔐 SSL cert or key not found. Generating with keygen.sh..."
+	chmod +x $(KEY_GEN_PATH)
+	$(KEY_GEN_PATH)
 
 .PHONY: all build up down clean re
