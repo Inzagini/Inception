@@ -4,11 +4,7 @@ KEY_GEN_PATH:= ./requirements/nginx/keygen.sh
 all: build
 
 build: $(CERT)
-ifeq ($(ser),)
 	docker compose -f docker-compose.yml build
-else
-	docker compose build $(ser)
-endif
 up:
 	docker compose -f docker-compose.yml up -d
 
@@ -30,6 +26,7 @@ rebuild: clean build up
 logs:
 	docker compose logs nginx
 	docker compose logs wordpress
+	docker compose logs mariadb
 
 $(CERT):
 	@echo "🔐 SSL cert or key not found. Generating with keygen.sh..."
