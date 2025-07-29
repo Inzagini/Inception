@@ -1,15 +1,15 @@
-CERT:= ./requirements/nginx/ssl/test.crt ./requirements/nginx/ssl/test.key
-KEY_GEN_PATH:= ./requirements/nginx/keygen.sh
+CERT:= ./srcs/requirements/nginx/ssl/test.crt ./srcs/requirements/nginx/ssl/test.key
+KEY_GEN_PATH:= ./srcs/requirements/nginx/keygen.sh
 
 all: build
 
 build: $(CERT)
-	docker compose -f docker-compose.yml build
+	docker compose -f srcs/docker-compose.yml build
 up:
-	docker compose -f docker-compose.yml up -d
+	docker compose -f srcs/docker-compose.yml up -d
 
 down:
-	docker compose -f docker-compose.yml down
+	docker compose -f srcs/docker-compose.yml down
 
 clean: down
 	docker volume rm inception_mariadbdata
@@ -24,9 +24,9 @@ re-all: down prune_a build up
 rebuild: clean build up
 	sleep 5 && docker ps | grep inception-db-1 > /dev/null || docker compose logs db
 logs:
-	docker compose logs nginx
-	docker compose logs wordpress
-	docker compose logs mariadb
+	docker compose -f srcs/docker-compose.yml logs nginx
+	docker compose -f srcs/docker-compose.yml logs wordpress
+	docker compose -f srcs/docker-compose.yml logs mariadb
 
 $(CERT):
 	@echo "🔐 SSL cert or key not found. Generating with keygen.sh..."
