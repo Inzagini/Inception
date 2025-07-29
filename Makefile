@@ -25,8 +25,8 @@ rebuild: clean build up
 	sleep 5 && docker ps | grep inception-db-1 > /dev/null || docker compose logs db
 logs:
 	docker compose -f srcs/docker-compose.yml logs nginx
-	docker compose -f srcs/docker-compose.yml logs wordpress
 	docker compose -f srcs/docker-compose.yml logs mariadb
+	docker compose -f srcs/docker-compose.yml logs wordpress
 
 $(CERT):
 	@echo "🔐 SSL cert or key not found. Generating with keygen.sh..."
