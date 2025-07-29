@@ -1,4 +1,4 @@
-CERT:= ./requirements/nginx/ssl/server.cert ./requirements/nginx/ssl/server.key
+CERT:= ./requirements/nginx/ssl/test.crt ./requirements/nginx/ssl/test.key
 KEY_GEN_PATH:= ./requirements/nginx/keygen.sh
 
 all: build
