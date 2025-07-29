@@ -1,0 +1,27 @@
+
+server {
+	listen 80 default;
+	return 301 https://$host$request_uri;
+}
+
+server {
+	listen 443 ssl;
+	server_name quannguy.42.fr;
+
+	ssl_certificate /etc/nginx/ssl/test.crt;
+	ssl_certificate_key /etc/nginx/ssl/test.key;
+
+	ssl_protocols TLSv1.2 TLSv1.3;
+	root /var/www/html;
+
+	index index.php index.html index.htm index.nginx-debian.html;
+
+	location / {
+		try_files $uri $uri/ =404;
+	}
+
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass wp-php:9000;
+	}
+}
