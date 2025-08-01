@@ -7,8 +7,10 @@ if [ -f wp-config.php ]; then
 else
 	echo "WordPress not configured. Starting setup..."
 	echo "Waiting for MariaDB to be ready..."
-	for i in {1..6}; do
-		if mysql -h mariadb -u ${MYSQL_USER} -p$(cat ${MYSQL_PASSWORD_FILE}) -e "SELECT 1" >/dev/null 2>&1; then
+	for i in {1..5}; do
+		mysql -h mariadb -u "${MYSQL_USER}" -p"$(cat ${MYSQL_PASSWORD_FILE})" -e "SELECT 1"
+		STATUS=$?;
+		if [ "$STATUS" -eq 0 ]; then
 			echo "MariaDB is ready!"
 			break
 		fi
