@@ -2,8 +2,9 @@ services:
   mariadb:
     build: requirements/mariadb/.
     container_name: mariadb
+    restart: unless-stopped
     volumes:
-      - mariadb_data:/home/quannguy/data
+      - mariadb_data:/var/lib/mysql
     env_file:
       - .env
     secrets:
@@ -18,8 +19,9 @@ services:
   wordpress:
     build: requirements/wordpress/.
     container_name: wp-php
+    restart: unless-stopped
     volumes:
-      - ./web:/var/www/html
+      - wordpress_data:/var/www/html
     env_file:
       - .env
     secrets:
@@ -36,10 +38,11 @@ services:
   nginx:
     build: requirements/nginx/.
     container_name: nginx
+    restart: unless-stopped
     ports:
       - "443:443"
     volumes:
-      - ./web:/var/www/html
+      - wordpress_data:/var/www/html
     depends_on:
       - mariadb
       - wordpress
@@ -51,6 +54,18 @@ networks:
 
 volumes:
   mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/quannguy/data/DB
+
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/quannguy/data/WordPress
 
 secrets:
   db_password:
