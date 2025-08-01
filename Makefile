@@ -12,7 +12,7 @@ down:
 	docker compose -f srcs/docker-compose.yml down
 
 clean: down
-	docker volume rm inception_mariadbdata
+	docker volume rm srcs_mariadb_data
 
 prune_a:
 	yes | docker system prune --all --volumes

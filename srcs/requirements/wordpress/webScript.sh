@@ -20,7 +20,7 @@ else
 	chmod +x wp-cli.phar
 	./wp-cli.phar core download --allow-root
 	./wp-cli.phar config create --dbname=${MYSQL_DATABASE} --dbuser=${MYSQL_USER} --dbpass=${MYSQL_PASSWORD} --dbhost=mariadb --allow-root
-	./wp-cli.phar core install --url=localhost --title=inception --admin_user=${MYSQL_ROOT_USER} --admin_password=${MYSQL_ROOT_PASSWORD} --admin_email=admin@admin.com --allow-root
+	./wp-cli.phar core install --url=${URL_DOMAIN} --title=inception --admin_user=${MYSQL_ROOT_USER} --admin_password=${MYSQL_ROOT_PASSWORD} --admin_email=admin@admin.com --allow-root
 	echo "Wordpress setup complete"
 fi
 

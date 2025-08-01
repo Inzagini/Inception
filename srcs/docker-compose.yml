@@ -3,7 +3,7 @@ services:
     build: requirements/mariadb/.
     container_name: mariadb
     volumes:
-      - ./database:/var/lib/mysql
+      - mariadb_data:/home/quannguy/data
     env_file:
       - .env
     secrets:
@@ -48,6 +48,9 @@ services:
 
 networks:
   inception:
+
+volumes:
+  mariadb_data:
 
 secrets:
   db_password:
