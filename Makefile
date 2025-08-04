@@ -6,13 +6,19 @@ all: build
 build: $(CERT)
 	docker compose -f srcs/docker-compose.yml build
 up:
+	mkdir -p /home/quannguy/data/DB
+	mkdir -p /home/quannguy/data/WordPress
 	docker compose -f srcs/docker-compose.yml up -d
 
 down:
 	docker compose -f srcs/docker-compose.yml down
 
 clean: down
-	docker volume rm inception_mariadbdata
+	@echo "Cleaning volume and data directories..."
+	docker volume rm srcs_mariadb_data srcs_wordpress_data || true
+	sudo rm -rf /home/quannguy/data/*
+	rm rm -f ./srcs/requirements/nginx/ssl/test.crt ./srcs/requirements/nginx/ssl/test.key
+	@echo "Clean complete. Next build will start fresh."
 
 prune_a:
 	yes | docker system prune --all --volumes

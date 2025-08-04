@@ -2,44 +2,54 @@ services:
   mariadb:
     build: requirements/mariadb/.
     container_name: mariadb
+    restart: unless-stopped
     volumes:
-      - ./database:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     env_file:
       - .env
     secrets:
       - db_password
       - db_root_password
     environment:
-      - MYSQL_PASSWORD=/run/secrets/db_password
-      - MYSQL_ROOT_PASSWORD=/run/secrets/db_root_password
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
     networks:
       inception:
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "--silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   wordpress:
     build: requirements/wordpress/.
     container_name: wp-php
+    restart: unless-stopped
     volumes:
-      - ./web:/var/www/html
+      - wordpress_data:/var/www/html
     env_file:
       - .env
     secrets:
       - db_password
       - db_root_password
     environment:
-      - MYSQL_PASSWORD=/run/secrets/db_password
-      - MYSQL_ROOT_PASSWORD=/run/secrets/db_root_password
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     networks:
       inception:
 
   nginx:
     build: requirements/nginx/.
     container_name: nginx
+    restart: unless-stopped
     ports:
       - "443:443"
     volumes:
-      - ./web:/var/www/html
+      - wordpress_data:/var/www/html
     depends_on:
       - mariadb
       - wordpress
@@ -48,6 +58,21 @@ services:
 
 networks:
   inception:
+
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/quannguy/data/DB
+
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/quannguy/data/WordPress
 
 secrets:
   db_password:

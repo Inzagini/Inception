@@ -8,6 +8,6 @@ RUN mkdir /etc/nginx/ssl && chmod 700 /etc/nginx/ssl
 COPY ssl/ /etc/nginx/ssl
 RUN chmod 600 /etc/nginx/ssl/*
 
-EXPOSE 80 443
+EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]
