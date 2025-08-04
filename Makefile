@@ -16,7 +16,8 @@ down:
 clean: down
 	@echo "Cleaning volume and data directories..."
 	docker volume rm srcs_mariadb_data srcs_wordpress_data || true
-	sudo rm -rf /home/quannguy/data/DB/* /home/quannguy/data/WordPress/*
+	sudo rm -rf /home/quannguy/data/*
+	rm rm -f ./srcs/requirements/nginx/ssl/test.crt ./srcs/requirements/nginx/ssl/test.key
 	@echo "Clean complete. Next build will start fresh."
 
 prune_a:

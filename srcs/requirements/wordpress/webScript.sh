@@ -6,7 +6,7 @@ if [ -f wp-config.php ]; then
 	echo "WordPress is already configured. Skipping setup..."
 else
 	echo "WordPress not configured. Starting setup..."
-	echo "Waiting for MariaDB to be ready..."
+	# echo "Waiting for MariaDB to be ready..."
 	for i in {1..5}; do
 		mysql -h mariadb -u "${MYSQL_USER}" -p"$(cat ${MYSQL_PASSWORD_FILE})" -e "SELECT 1"
 		STATUS=$?;
