@@ -9,4 +9,4 @@ COPY script.sh .
 RUN mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld
 RUN chmod 777 script.sh
 
-CMD ["./script.sh"]
+ENTRYPOINT ["./script.sh"]

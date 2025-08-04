@@ -10,4 +10,4 @@ COPY www.conf /etc/php/8.2/fpm/pool.d
 COPY webScript.sh .
 RUN chmod +x webScript.sh
 
-CMD ["./webScript.sh"]
+ENTRYPOINT ["./webScript.sh"]
