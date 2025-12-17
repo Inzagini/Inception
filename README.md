@@ -1,5 +1,9 @@
 # Inception
 
+<p align="center">
+  <img src="https://img.shields.io/badge/42%20School-Inception-blue" alt="42 Inception"/>
+</p>
+
 A Docker-based project to deploy a secure WordPress website with MariaDB and Nginx using Docker Compose. This project is structured for educational purposes and follows the 42 School Inception subject requirements.
 
 ## Project Structure
@@ -84,3 +88,7 @@ Inception/
 
 ## Author
 - [Inzagini](https://github.com/Inzagini)
+
+<p align="center">
+  <em>42 Inception &copy; 2025</em>
+</p>Webserv
